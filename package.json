@@ -1,0 +1,32 @@
+{
+  "name": "deep-computed",
+  "version": "0.0.0",
+  "description": "Iterates over objects and arrays and transforms functions to computed properties",
+  "main": "build/index.js",
+  "author": "Gabe Scholz",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^19.2.3",
+    "jest": "^20.0.4",
+    "np": "^2.15.0",
+    "ts-jest": "^20.0.4",
+    "typescript": "^2.3.3"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "tsc --outDir build -d",
+    "prepublish": "npm build",
+    "np": "np"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
