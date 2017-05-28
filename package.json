@@ -5,6 +5,9 @@
   "main": "build/index.js",
   "author": "Gabe Scholz",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/garbles/deep-computed"
+  },
   "devDependencies": {
     "@types/jest": "^19.2.3",
     "jest": "^20.0.4",
