@@ -18,7 +18,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "tsc --outDir build -d",
+    "build": "rm -rf build && tsc --outDir build -d",
     "prepublish": "npm build",
     "np": "np"
   },
