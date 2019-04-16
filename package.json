@@ -10,27 +10,23 @@
     "url": "https://github.com/garbles/deep-computed"
   },
   "devDependencies": {
-    "@types/jest": "^19.2.3",
-    "jest": "^20.0.4",
-    "np": "^2.15.0",
-    "ts-jest": "^20.0.4",
-    "typescript": "^2.3.3"
+    "@types/jest": "^24.0.11",
+    "jest": "^24.7.1",
+    "np": "^4.0.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.3"
   },
   "scripts": {
     "test": "jest",
     "build": "rm -rf build && tsc --outDir build -d",
-    "prepublish": "npm build",
+    "prepublish": "yarn build",
     "np": "np"
   },
   "jest": {
     "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      ".ts": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ]
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": ["ts", "js"]
   }
 }

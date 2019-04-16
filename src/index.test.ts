@@ -1,7 +1,7 @@
-import { deepComputed } from './index';
+import { deepComputed, Computable } from "./index";
 
-describe('deepComputed', () => {
-  it('defines properties on an object', () => {
+describe("deepComputed", () => {
+  it("defines properties on an object", () => {
     const obj = {
       a: 12,
       b: 10
@@ -13,8 +13,18 @@ describe('deepComputed', () => {
     expect(Object.keys(next)).toHaveLength(0);
   });
 
-  it('resolves computed properties', () => {
-    const obj = {
+  it("resolves computed properties", () => {
+    type Next = {
+      a: number;
+      b: number;
+      c: number;
+      d: {
+        e: number;
+      };
+      f: number[];
+    };
+
+    const obj: Computable<Next> = {
       a: 12,
       b: 10,
       c: ({ a, b }) => a + b,
@@ -24,17 +34,7 @@ describe('deepComputed', () => {
       f: [({ a, d }) => a + d.e, ({ a }) => a + 1]
     };
 
-    type Next = {
-      a: number;
-      b: number;
-      c: number;
-      d: {
-        e: number;
-      },
-      f: number[]
-    }
-
-    const next = deepComputed<typeof obj, Next>(obj);
+    const next = deepComputed(obj);
 
     expect(next.c).toEqual(22);
     expect(next.d.e).toEqual(34);
@@ -49,10 +49,10 @@ describe('deepComputed', () => {
     expect(sum).toEqual(59);
   });
 
-  it('enumerates over arrays', () => {
-    const obj = [() => 1, () => 2];
+  it("enumerates over arrays", () => {
+    const obj: Computable<[number, number]> = [() => 1, arr => arr[0] + 1];
 
-    const next = deepComputed<typeof obj, number[]>(obj);
+    const next = deepComputed(obj);
 
     let sum = 0;
 

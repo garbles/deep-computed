@@ -1,8 +1,16 @@
-const isObject = (obj: any): obj is Object =>
-  Object.prototype.toString.call(obj) === '[object Object]';
+// prettier-ignore
+type RecursiveComputable<T, Root> = {
+  [K in keyof T]:
+    T[K] extends object ? RecursiveComputable<T[K], Root> :
+    T[K] | ((arg: Root) => T[K])
+};
 
-const isFunction = (obj: any): obj is Function =>
-  typeof obj === 'function';
+export type Computable<T> = RecursiveComputable<T, T>;
+
+const isObject = (obj: any): obj is Object =>
+  Object.prototype.toString.call(obj) === "[object Object]";
+
+const isFunction = (obj: any): obj is Function => typeof obj === "function";
 
 const empty = <O>(obj: O) => {
   if (isObject(obj)) {
@@ -10,7 +18,7 @@ const empty = <O>(obj: O) => {
   } else if (Array.isArray(obj)) {
     return [];
   }
-}
+};
 
 const keys = <O, K extends (keyof O)[]>(obj: O): K => {
   if (isObject(obj)) {
@@ -18,9 +26,9 @@ const keys = <O, K extends (keyof O)[]>(obj: O): K => {
   } else {
     return Object.keys(obj) as K;
   }
-}
+};
 
-function defineProperties<O, T, R>(obj: O, root?: R): T {
+function defineProperties<O, R>(obj: Computable<O>, root?: R): O {
   const next = empty(obj);
   const props = keys(obj);
 
@@ -52,7 +60,10 @@ function defineProperties<O, T, R>(obj: O, root?: R): T {
     Object.defineProperty(next, key, { value, configurable: false });
   }
 
-  return next as T;
+  return next as O;
 }
 
-export const deepComputed = <O, T, R = O>(obj: O): T => defineProperties<O, T, R>(obj);
+export const deepComputed = <O>(obj: Computable<O>): O =>
+  defineProperties<O, O>(obj);
+
+export default deepComputed;
