@@ -8,16 +8,28 @@ If an object or array has a function as a value, it will be wrapped by `Object.d
 and its getter will pass the root object to it as an argument to resolve the value of the function.
 For example,
 
-```js
-import { deepComputed } from './deepComputed';
+```ts
+import { deepComputed, Computed } from "./deepComputed";
 
-const obj = {
+type MyType = {
+  cool: number;
+  dude: number;
+  deep: {
+    ly: {
+      nested: {
+        coolAndDude: number;
+      };
+    };
+  };
+};
+
+const obj: Computed<MyType> = {
   cool: 123,
   dude: 456,
   deep: {
     ly: {
       nested: {
-        coolAndDude: ({cool, dude}) => cool + dude
+        coolAndDude: ({ cool, dude }) => cool + dude
       }
     }
   }
