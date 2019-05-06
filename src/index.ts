@@ -44,7 +44,8 @@ function defineProperties<O, R>(obj: Computable<O>, root?: R): O {
         get() {
           return value(root);
         },
-        configurable: false
+        configurable: false,
+        enumerable: true
       });
       continue;
     }
