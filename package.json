@@ -1,6 +1,6 @@
 {
   "name": "deep-computed",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Iterates over objects and arrays and transforms functions to computed properties",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
