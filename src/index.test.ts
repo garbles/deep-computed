@@ -10,7 +10,7 @@ describe("deepComputed", () => {
     const next = deepComputed(obj);
 
     expect(next).not.toBe(obj);
-    expect(Object.keys(next)).toHaveLength(0);
+    expect(Object.keys(next)).toHaveLength(2);
   });
 
   it("resolves computed properties", () => {
@@ -36,17 +36,30 @@ describe("deepComputed", () => {
 
     const next = deepComputed(obj);
 
-    expect(next.c).toEqual(22);
-    expect(next.d.e).toEqual(34);
-    expect(next.f[0]).toEqual(46);
+    expect(next).toEqual({
+      a: 12,
+      b: 10,
+      c: 22,
+      d: {
+        e: 34
+      },
+      f: [46, 13]
+    });
 
-    let sum = 0;
+    const next2 = deepComputed({
+      ...obj,
+      a: 50
+    } as Computable<Next>);
 
-    for (let val of next.f) {
-      sum += val;
-    }
-
-    expect(sum).toEqual(59);
+    expect(next2).toEqual({
+      a: 50,
+      b: 10,
+      c: 60,
+      d: {
+        e: 110
+      },
+      f: [160, 51]
+    });
   });
 
   it("enumerates over arrays", () => {
@@ -54,12 +67,6 @@ describe("deepComputed", () => {
 
     const next = deepComputed(obj);
 
-    let sum = 0;
-
-    for (let val of next) {
-      sum += val;
-    }
-
-    expect(sum).toEqual(3);
+    expect(next).toEqual([1, 2]);
   });
 });

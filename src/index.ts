@@ -53,12 +53,17 @@ function defineProperties<O, R>(obj: Computable<O>, root?: R): O {
     if (Array.isArray(value) || isObject(value)) {
       Object.defineProperty(next, key, {
         value: defineProperties(value, root),
-        configurable: false
+        configurable: false,
+        enumerable: true
       });
       continue;
     }
 
-    Object.defineProperty(next, key, { value, configurable: false });
+    Object.defineProperty(next, key, {
+      value,
+      configurable: false,
+      enumerable: true
+    });
   }
 
   return next as O;
